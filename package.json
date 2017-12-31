@@ -1,0 +1,14 @@
+{
+  "name": "autodeploy",
+  "version": "1.0.0",
+  "description": "WebHook自动构建服务",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "cheneyxu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
