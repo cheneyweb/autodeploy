@@ -16,10 +16,8 @@ app.post('/deploy/static/:server/', function (req, res) {
         case 'xserver':
             qbucket = 'page'
             break;
-        case 'uplog':
-            qbucket = 'uplog'
-            break;
         default:
+            qbucket = req.params.server
             break;
     }
     const commands = [
@@ -31,7 +29,7 @@ app.post('/deploy/static/:server/', function (req, res) {
         'rm -rf pagelist.txt',
         `./qshell listbucket ${qbucket} pagelist.txt`,
         `./qshell batchdelete -force ${qbucket} pagelist.txt`,
-        './qshell qupload ./qshell.conf'
+        `./qshell qupload ./qshell_${req.params.server}.conf`
     ].join(' && ')
     deploy(commands)
     res.send('Y')
