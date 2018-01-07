@@ -11,6 +11,17 @@ const ROOT_DIR = '/usr/local/node'
 app.post('/deploy/static/:server/', function (req, res) {
     //req.headers['x-gitlab-token'] == 'j9hb5ydtetfbRGQy42tNhztmJe1qSvC'
     console.log(`开始自动构建【${req.params.server}】...`)
+    let qbucket = ''
+    switch (req.params.server) {
+        case 'xserver':
+            qbucket = 'page'
+            break;
+        case 'uplog':
+            qbucket = 'uplog'
+            break;
+        default:
+            break;
+    }
     const commands = [
         `cd ${ROOT_DIR}/${req.params.server}/`,
         'git pull',
@@ -18,8 +29,8 @@ app.post('/deploy/static/:server/', function (req, res) {
 
         `cd ${ROOT_DIR}/autodeploy/`,
         'rm -rf pagelist.txt',
-        './qshell listbucket page pagelist.txt',
-        './qshell batchdelete -force page pagelist.txt',
+        `./qshell listbucket ${qbucket} pagelist.txt`,
+        `./qshell batchdelete -force ${qbucket} pagelist.txt`,
         './qshell qupload ./qshell.conf'
     ].join(' && ')
     deploy(commands)
