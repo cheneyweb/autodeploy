@@ -1,6 +1,7 @@
 const express = require('express')
 const exec = require('child_process').exec
 const app = express()
+const nodemailer = require('nodemailer')
 
 const PORT = 10001
 const ROOT_DIR = '/usr/local/node'
@@ -50,6 +51,42 @@ app.post('/deploy/node/:server/', function (req, res) {
     res.send('Y')
 })
 
+/**
+ * 邮件服务
+ */
+app.post('/email/send', function (req, res) {
+    let inparam = req.body
+    console.log(`开始发送邮件【${inparam.emailserver}:${inparam.emailtype}】...`)
+    if (inparam.emailkey != 'cheneyemail') {
+        return
+    }
+    let captcha = inparam.emaildata
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.mxhichina.com',
+        port: 25,
+        secure: false,
+        auth: {
+            user: "captcha@xserver.top",
+            pass: "Qiyexys36"
+        }
+    });
+
+    let mailOptions = {
+        from: '"UPLOG" <captcha@xserver.top>',
+        to: inparam.username,
+        subject: `UPLOG注册验证码:${captcha}`,
+        text: `感谢您注册UPLOG云日志服务，这是您的邮箱验证码：<b>${captcha}</b>`,
+        html: `感谢您注册UPLOG云日志服务，这是您的邮箱验证码：<b>${captcha}</b>`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return log.error(error)
+        }
+    });
+    res.send('Y')
+})
+
 // 部署函数
 function deploy(commands) {
     exec(commands, function (error, stdout, stderr) {
@@ -64,6 +101,14 @@ function deploy(commands) {
             console.error(`stderr: ${stderr}`)
         }
     })
+}
+
+// 随机数
+function randomNum(min, max) {
+    let range = max - min;
+    let rand = Math.random();
+    let num = min + Math.round(rand * range); //四舍五入
+    return num;
 }
 
 console.log(`autodeploy自动构建服务启动，端口：${PORT}`)
