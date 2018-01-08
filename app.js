@@ -83,9 +83,9 @@ app.post('/email/send', function (req, res) {
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
-        log.info(`邮件发送完毕：${info}`)
+        console.info(`邮件发送完毕：${info}`)
         if (error) {
-            return log.error(error)
+            return console.error(error)
         }
     });
     res.send('Y')
