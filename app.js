@@ -59,7 +59,7 @@ app.post('/deploy/node/:server/', function (req, res) {
  */
 app.post('/email/send', function (req, res) {
     let inparam = req.body
-    console.log(`开始发送邮件【${inparam.emailserver}:${inparam.emailtype}】...`)
+    console.log(`开始发送邮件【${inparam.emailserver}:${inparam.emailtype}:${inparam.username}:${inparam.emaildata}】...`)
     if (inparam.emailkey != 'cheneyemail') {
         return
     }
@@ -83,6 +83,7 @@ app.post('/email/send', function (req, res) {
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
+        log.info(`邮件发送完毕：${info}`)
         if (error) {
             return log.error(error)
         }
