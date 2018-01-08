@@ -1,6 +1,7 @@
 const express = require('express')
 const exec = require('child_process').exec
 const app = express()
+const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
 
 const PORT = 10001
@@ -103,13 +104,6 @@ function deploy(commands) {
     })
 }
 
-// 随机数
-function randomNum(min, max) {
-    let range = max - min;
-    let rand = Math.random();
-    let num = min + Math.round(rand * range); //四舍五入
-    return num;
-}
-
 console.log(`autodeploy自动构建服务启动，端口：${PORT}`)
+app.use(bodyParser.json())
 app.listen(PORT)
