@@ -7,6 +7,8 @@ const nodemailer = require('nodemailer')
 const PORT = 10001
 const ROOT_DIR = '/usr/local/node'
 
+app.use(bodyParser.json())
+
 /**
  * 静态资源部署
  */
@@ -105,5 +107,4 @@ function deploy(commands) {
 }
 
 console.log(`autodeploy自动构建服务启动，端口：${PORT}`)
-app.use(bodyParser.json())
 app.listen(PORT)
