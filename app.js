@@ -67,7 +67,7 @@ app.post('/email/send', function (req, res) {
     let transporter = nodemailer.createTransport({
         host: 'smtp.mxhichina.com',
         port: 25,
-        secure: false,
+        secure: true,
         auth: {
             user: "captcha@xserver.top",
             pass: "Qiyexys36"
