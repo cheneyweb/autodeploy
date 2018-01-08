@@ -66,7 +66,7 @@ app.post('/email/send', function (req, res) {
     let captcha = inparam.emaildata
     let transporter = nodemailer.createTransport({
         host: 'smtp.mxhichina.com',
-        port: 25,
+        port: 465,
         secure: true,
         auth: {
             user: "captcha@xserver.top",
