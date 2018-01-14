@@ -20,6 +20,9 @@ app.post('/deploy/static/:server/', function (req, res) {
         case 'xserver':
             qbucket = 'page'
             break;
+        case 'parcel-vue':
+            qbucket = 'parcel'
+            break;
         default:
             qbucket = req.params.server
             break;
