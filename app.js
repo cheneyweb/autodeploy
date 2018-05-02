@@ -1,61 +1,22 @@
+// 系统配置参数
+const config = require('config')
+const port = config.server.port
+// 日志相关
+const log = require('tracer').colorConsole({ level: config.log.level })
+// 应用服务
 const express = require('express')
-const exec = require('child_process').exec
 const app = express()
+// 应用中间件
 const bodyParser = require('body-parser')
+const xcontroller = require('express-xcontroller')
+// 工具
+const exec = require('child_process').exec
 const nodemailer = require('nodemailer')
 
-const PORT = 10001
-const ROOT_DIR = '/usr/local/node'
-
+// 中间件加载
 app.use(bodyParser.json())
-
-/**
- * 静态资源部署
- */
-app.post('/deploy/static/:server/', function (req, res) {
-    //req.headers['x-gitlab-token'] == 'j9hb5ydtetfbRGQy42tNhztmJe1qSvC'
-    console.log(`开始自动构建【${req.params.server}】...`)
-    let qbucket = ''
-    switch (req.params.server) {
-        case 'xserver':
-            qbucket = 'page'
-            break;
-        case 'parcel-vue':
-            qbucket = 'parcel'
-            break;
-        default:
-            qbucket = req.params.server
-            break;
-    }
-    const commands = [
-        `cd ${ROOT_DIR}/${req.params.server}/`,
-        'git pull',
-        'npm run build',
-
-        `cd ${ROOT_DIR}/autodeploy/`,
-        'rm -rf pagelist.txt',
-        `./qshell listbucket ${qbucket} pagelist.txt`,
-        `./qshell batchdelete -force ${qbucket} pagelist.txt`,
-        `./qshell qupload ./qshell_${req.params.server}.conf`
-    ].join(' && ')
-    deploy(commands)
-    res.send('Y')
-})
-
-/**
- * Node服务部署
- */
-app.post('/deploy/node/:server/', function (req, res) {
-    //req.headers['x-gitlab-token'] == 'j9hb5ydtetfbRGQy42tNhztmJe1qSvC'
-    console.log(`开始自动构建【${req.params.server}】...`)
-    const commands = [
-        `cd ${ROOT_DIR}/${req.params.server}`,
-        'git pull',
-        `pm2 restart ${req.params.server}`
-    ].join(' && ')
-    deploy(commands)
-    res.send('Y')
-})
+// 加载所有控制器
+xcontroller.init(app, config.server)
 
 /**
  * 邮件服务
@@ -94,21 +55,5 @@ app.post('/email/send', function (req, res) {
     res.send('Y')
 })
 
-// 部署函数
-function deploy(commands) {
-    exec(commands, function (error, stdout, stderr) {
-        if (error) {
-            console.error(`exec error: ${error}`)
-            return
-        }
-        if (stdout) {
-            console.log(`stdout: ${stdout}`)
-        }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`)
-        }
-    })
-}
-
-console.log(`autodeploy自动构建服务启动，端口：${PORT}`)
-app.listen(PORT)
+log.info(`x-ci持续集成服务启动，端口：${10001}`)
+app.listen(10001)

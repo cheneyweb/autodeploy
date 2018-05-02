@@ -1,0 +1,10 @@
+{
+    "log": {
+        "level": "info"
+    },
+    "server": {
+        "port": 10001,
+        "controllerRoot": "/deploy",
+        "controllerDir": "/src/controller/"
+    }
+}

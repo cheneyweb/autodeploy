@@ -1,2 +1,2 @@
-# autodeploy
-WebHook自动构建服务
+# x-ci
+轻巧精简的持续构建微服务
