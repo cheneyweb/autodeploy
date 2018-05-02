@@ -25,7 +25,7 @@ router.post('/:server/', function (req, res) {
         'git pull',
         'npm run build',
 
-        `cd ${ROOT_DIR}/autodeploy/`,
+        `cd ${ROOT_DIR}/x-ci/`,
         'rm -rf pagelist.txt',
         `./qshell listbucket ${qbucket} pagelist.txt`,
         `./qshell batchdelete -force ${qbucket} pagelist.txt`,
