@@ -1,4 +1,5 @@
 var router = require('express').Router()
+const exec = require('child_process').exec
 const ROOT_DIR = '/usr/local/node'
 
 /**

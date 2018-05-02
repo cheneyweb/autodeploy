@@ -10,7 +10,6 @@ const app = express()
 const bodyParser = require('body-parser')
 const xcontroller = require('express-xcontroller')
 // 工具
-const exec = require('child_process').exec
 const nodemailer = require('nodemailer')
 
 // 中间件加载
