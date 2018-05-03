@@ -38,7 +38,7 @@ router.post('/:server/', function (req, res) {
     let deployCommand = config.ci[req.params.server]
     // 数组直接运行命令
     if (deployCommand instanceof Array) {
-        execsh.runSync(deployCommand.join(' && '))
+        execsh.run(deployCommand.join(' && '))
     }
     // 根据同步和异步命令执行
     else {
