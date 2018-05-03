@@ -1,4 +1,5 @@
 const child_process = require('child_process')
+const config = require('config')
 const log = require('tracer').colorConsole({ level: config.log.level })
 
 const execOptions = {
