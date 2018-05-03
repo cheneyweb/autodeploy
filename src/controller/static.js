@@ -9,7 +9,7 @@ const log = require('tracer').colorConsole({ level: config.log.level })
 /**
  * 静态资源部署
  */
-router.post('/static/:server/', function (req, res) {
+router.post('/:server/', function (req, res) {
     //req.headers['x-gitlab-token'] == 'j9hb5ydtetfbRGQy42tNhztmJe1qSvC'
     log.info(`开始自动构建【${req.params.server}】...`)
 
