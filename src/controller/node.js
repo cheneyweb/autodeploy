@@ -1,5 +1,5 @@
 var router = require('express').Router()
-const exec = require('child_process').exec
+const execsh = require('../util/execsh')
 const ROOT_DIR = '/usr/local/node'
 
 /**
@@ -8,29 +8,15 @@ const ROOT_DIR = '/usr/local/node'
 router.post('/:server/', function (req, res) {
     //req.headers['x-gitlab-token'] == 'j9hb5ydtetfbRGQy42tNhztmJe1qSvC'
     console.log(`开始自动构建【${req.params.server}】...`)
+
     const commands = [
         `cd ${ROOT_DIR}/${req.params.server}`,
         'git pull',
         `pm2 restart ${req.params.server}`
     ].join(' && ')
-    deploy(commands)
+    
+    execsh.run(commands)
     res.send('Y')
 })
-
-// 部署函数
-function deploy(commands) {
-    exec(commands, function (error, stdout, stderr) {
-        if (error) {
-            console.error(`exec error: ${error}`)
-            return
-        }
-        if (stdout) {
-            console.log(`stdout: ${stdout}`)
-        }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`)
-        }
-    })
-}
 
 module.exports = router
