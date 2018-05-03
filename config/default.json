@@ -37,7 +37,7 @@
                 [
                     "cd /usr/local/node/xserver/",
                     "git pull",
-                    "npm run build",
+                    "npm run build"
                 ]
             ],
             "async": [
