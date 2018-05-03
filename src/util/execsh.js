@@ -1,4 +1,5 @@
-const exec = require('child_process').exec
+const child_process = require('child_process')
+const log = require('tracer').colorConsole({ level: config.log.level })
 
 const execOptions = {
     encoding: 'utf8',
@@ -10,17 +11,20 @@ const execOptions = {
 }
 
 const execsh = {
-    // 部署函数
+    runSync(commands) {
+        let output = child_process.execSync(commands, execOptions)
+        log.info(output)
+    },
     run(commands) {
-        exec(commands, execOptions, (error, stdout, stderr) => {
+        child_process.exec(commands, execOptions, (error, stdout, stderr) => {
             if (error) {
-                console.error(`EXEC ERROR: ${error}`)
+                log.error(`EXEC ERROR: ${error}`)
             }
             if (stdout) {
-                console.log(`EXEC STDOUT: ${stdout}`)
+                log.info(`EXEC STDOUT: ${stdout}`)
             }
             if (stderr) {
-                console.error(`EXEC STDERR: ${stderr}`)
+                log.error(`EXEC STDERR: ${stderr}`)
             }
         })
     }

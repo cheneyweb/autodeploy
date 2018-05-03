@@ -6,5 +6,59 @@
         "port": 10001,
         "controllerRoot": "/deploy",
         "controllerDir": "/src/controller/"
+    },
+    "ci": {
+        "nodeProjectDir": "/usr/local/node",
+        "cake": [
+            "cd /usr/local/node/cake",
+            "git pull",
+            "pm2 restart cake"
+        ],
+        "upserver": {
+            "sync": [
+                [
+                    "cd /usr/local/node/upserver/",
+                    "git pull"
+                ]
+            ],
+            "async": [
+                [
+                    "npm run build",
+                    "cd /usr/local/node/x-ci/",
+                    "rm -f pagelist.txt",
+                    "./qshell listbucket upserver pagelist.txt",
+                    "./qshell batchdelete -force upserver pagelist.txt",
+                    "./qshell qupload ./qshell_upserver.conf"
+                ]
+            ]
+        },
+        "xserver": {
+            "sync": [
+                [
+                    "cd /usr/local/node/xserver/",
+                    "git pull"
+                ]
+            ],
+            "async": [
+                [
+                    "npm run build",
+                    "cd /usr/local/node/x-ci/",
+                    "rm -f pagelist.txt",
+                    "./qshell listbucket page pagelist.txt",
+                    "./qshell batchdelete -force page pagelist.txt",
+                    "./qshell qupload ./qshell_xserver.conf"
+                ]
+            ]
+        },
+        "parcel-vue": [
+            "cd /usr/local/node/parcel-vue/",
+            "git pull",
+            "npm run build",
+            "cd /usr/local/node/x-ci/",
+            "rm -f pagelist.txt",
+            "./qshell listbucket parcel pagelist.txt",
+            "./qshell batchdelete -force parcel pagelist.txt",
+            "./qshell qupload ./qshell_parcel-vue.conf"
+        ]
     }
 }
