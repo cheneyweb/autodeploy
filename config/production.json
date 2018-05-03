@@ -1,6 +1,6 @@
 {
     "log": {
-        "level": "warn"
+        "level": "info"
     },
     "server": {
         "port": 10001,
