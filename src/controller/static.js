@@ -1,6 +1,6 @@
 var router = require('express').Router()
 const execsh = require('../util/execsh')
-const _ = 'lodash'
+const _ = require('lodash')
 // 日志相关
 const config = require('config')
 const log = require('tracer').colorConsole({ level: config.log.level })
