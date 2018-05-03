@@ -18,14 +18,14 @@
             "sync": [
                 [
                     "cd /usr/local/node/upserver/",
-                    "git pull"
+                    "git pull",
+                    "npm run build"
                 ]
             ],
             "async": [
                 [
-                    "npm run build",
                     "cd /usr/local/node/x-ci/",
-                    "rm -rf pagelist.txt",
+                    "rm -f pagelist.txt",
                     "./qshell listbucket upserver pagelist.txt",
                     "./qshell batchdelete -force upserver pagelist.txt",
                     "./qshell qupload ./qshell_upserver.conf"
@@ -36,14 +36,14 @@
             "sync": [
                 [
                     "cd /usr/local/node/xserver/",
-                    "git pull"
+                    "git pull",
+                    "npm run build"
                 ]
             ],
             "async": [
                 [
-                    "npm run build",
                     "cd /usr/local/node/x-ci/",
-                    "rm -rf pagelist.txt",
+                    "rm -f pagelist.txt",
                     "./qshell listbucket page pagelist.txt",
                     "./qshell batchdelete -force page pagelist.txt",
                     "./qshell qupload ./qshell_xserver.conf"
@@ -55,7 +55,7 @@
             "git pull",
             "npm run build",
             "cd /usr/local/node/x-ci/",
-            "rm -rf pagelist.txt",
+            "rm -f pagelist.txt",
             "./qshell listbucket parcel pagelist.txt",
             "./qshell batchdelete -force parcel pagelist.txt",
             "./qshell qupload ./qshell_parcel-vue.conf"
