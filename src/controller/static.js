@@ -1,41 +1,22 @@
-var router = require('express').Router()
+// 路由相关
+const Router = require('koa-router')
+// 工具相关
 const execsh = require('../util/execsh')
 const _ = require('lodash')
 // 日志相关
 const config = require('config')
 const log = require('tracer').colorConsole({ level: config.log.level })
-// const ROOT_DIR = '/usr/local/node'
+// 初始化路由
+const router = new Router()
 
 /**
  * 静态资源部署
  */
-router.post('/:server/', function (req, res) {
+router.post('/:server/', async function (ctx, next) {
     //req.headers['x-gitlab-token'] == 'j9hb5ydtetfbRGQy42tNhztmJe1qSvC'
-    log.info(`开始自动构建【${req.params.server}】...`)
+    log.info(`开始自动构建【${ctx.params.server}】...`)
 
-    // let qbucket = req.params.server
-    // switch (req.params.server) {
-    //     case 'xserver':
-    //         qbucket = 'page'
-    //         break;
-    //     case 'parcel-vue':
-    //         qbucket = 'parcel'
-    //         break;
-    // }
-
-    // const commands = [
-    //     `cd ${ROOT_DIR}/${req.params.server}/`,
-    //     'git pull',
-    //     'npm run build',
-
-    //     `cd ${ROOT_DIR}/x-ci/`,
-    //     'rm -rf pagelist.txt',
-    //     `./qshell listbucket ${qbucket} pagelist.txt`,
-    //     `./qshell batchdelete -force ${qbucket} pagelist.txt`,
-    //     `./qshell qupload ./qshell_${req.params.server}.conf`
-    // ].join(' && ')
-
-    let deployCommand = config.ci[req.params.server]
+    let deployCommand = config.ci[ctx.params.server]
     // 数组直接运行命令
     if (deployCommand instanceof Array) {
         execsh.run(deployCommand.join(' && '))
@@ -54,7 +35,8 @@ router.post('/:server/', function (req, res) {
             execsh.run(commandArr.join(' && '))
         }
     }
-    res.send('Y')
+
+    ctx.body = 'Y'
 })
 
 module.exports = router

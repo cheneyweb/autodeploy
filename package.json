@@ -9,12 +9,13 @@
   "author": "cheneyxu",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.2",
     "config": "^1.30.0",
-    "express": "^4.16.3",
-    "express-xcontroller": "^1.0.0",
+    "koa": "^2.5.1",
+    "koa-body": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "koa-xcontroller": "^1.1.0",
     "lodash": "^4.17.10",
     "nodemailer": "^4.6.4",
-    "tracer": "^0.8.12"
+    "tracer": "^0.8.15"
   }
 }
