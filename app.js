@@ -7,6 +7,8 @@ const mount = require('koa-mount')
 const koaBody = require('koa-body')
 const cors = require('@koa/cors')
 const xcontroller = require('koa-xcontroller')
+const xnosql = require('koa-xnosql')
+
 // 日志相关
 const log = require('tracer').colorConsole({ level: config.log.level })
 
@@ -14,11 +16,14 @@ const log = require('tracer').colorConsole({ level: config.log.level })
 const app = new Koa()
 // 跨域处理
 app.use(mount('/deploy/xci/', cors()))  // CI跨域请求
+app.use(mount('/xci/xnosql/', cors()))  // CI跨域请求
 // 入参处理
 app.use(koaBody())
 
 // 加载所有控制器
 xcontroller.init(app, config.server)
+// 加载koa-xnosql中间件
+xnosql.init(app, config.server)
 
 log.info(`x-ci持续集成服务启动，端口：${10001}`)
 app.listen(10001)
