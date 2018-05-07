@@ -11,7 +11,7 @@ const router = new Router()
 /**
  * 持续集成服务列表
  */
-router.get('/serverList', async function (ctx, next) {
+router.get('/ciconfig', async function (ctx, next) {
     ctx.body = config.ci
 })
 

@@ -5,7 +5,9 @@
     "server": {
         "port": 10001,
         "controllerRoot": "/deploy",
-        "controllerDir": "/src/controller/"
+        "controllerDir": "/src/controller/",
+        "xnosqlRoot": "/xci/xnosql",
+        "mongodbUrl": "mongodb://localhost:27017/x-ci"
     },
     "ci": {
         "nodeProjectDir": "/usr/local/node",
