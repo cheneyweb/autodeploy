@@ -18,8 +18,7 @@ const app = new Koa()
 // 启用静态资源服务
 app.use(mount(config.server.staticRoot, staticServer(`${__dirname}/dist`)))
 // 跨域处理
-app.use(mount('/deploy/xci/', cors()))  // CI跨域请求
-app.use(mount('/xci/xnosql/', cors()))  // CI跨域请求
+app.use(mount('/xci/', cors()))  // CI跨域请求
 // 入参处理
 app.use(koaBody())
 
