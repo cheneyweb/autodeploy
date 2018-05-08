@@ -71,6 +71,7 @@ function updateCIFlow(ctx, res) {
         updatedAt: Date.now(),
         result: res
     })
+    log.info(`完成自动构建【${ctx.params.server}】`)
 }
 
 module.exports = router
