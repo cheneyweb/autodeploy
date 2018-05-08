@@ -19,6 +19,7 @@ router.post('/:server/', async function (ctx, next) {
         type: 'static',
         status: 'building',
         command: deployCommand,
+        result: '构建中...',
         createdAt: Date.now()
     })
     ctx.deployCommand = deployCommand
@@ -32,35 +33,44 @@ router.post('/:server/', async function (ctx, next) {
 router.post('/:server/', async function (ctx, next) {
     //req.headers['x-gitlab-token'] == 'j9hb5ydtetfbRGQy42tNhztmJe1qSvC'
     let deployCommand = ctx.deployCommand
-    // // 数组直接运行命令
-    // if (deployCommand instanceof Array) {
-    //     execsh.run(deployCommand.join(' && '))
-    // }
-    // // 根据同步和异步命令执行
-    // else {
-    //     // 解析同步和异步命令
-    //     let syncCommandArr = _.flatten(deployCommand.sync)
-    //     let asyncCommandArr = deployCommand.async
-    //     // 执行同步命令
-    //     log.info('开始执行同步命令...')
-    //     execsh.runSync(syncCommandArr.join(' && '))
-    //     // 执行异步命令
-    //     log.info('开始执行异步命令...')
-    //     for (let commandArr of asyncCommandArr) {
-    //         execsh.run(commandArr.join(' && '))
-    //     }
-    // }
-    return next()
+    // 数组直接运行命令
+    if (deployCommand instanceof Array) {
+        execsh.run(deployCommand.join(' && ')).then((res) => {
+            // 更新执行结果
+            updateCIFlow(ctx, res)
+        })
+    }
+    // 根据同步和异步命令执行
+    else {
+        let promiseArr = []
+        // 解析同步和异步命令
+        let syncCommandArr = _.flatten(deployCommand.sync)
+        let asyncCommandArr = deployCommand.async
+        // 执行同步命令
+        log.info('开始执行同步命令...')
+        let stdsync = execsh.runSync(syncCommandArr.join(' && '))
+        // 执行异步命令
+        log.info('开始执行异步命令...')
+        for (let commandArr of asyncCommandArr) {
+            promiseArr.push(execsh.run(commandArr.join(' && ')))
+        }
+        // 更新执行结果
+        Promise.all(promiseArr).then((res) => {
+            res.stdsync = stdsync
+            updateCIFlow(ctx, res)
+        })
+    }
+    ctx.body = 'Y'
 })
 
-// 更新构建流
-router.post('/:server/', async function (ctx, next) {
+// 内部方法：更新构建流
+function updateCIFlow(ctx, res) {
     axios.post(`http://localhost:${config.server.port}/xci/xnosql/ciflow/update`, {
         _id: ctx._id,
         status: 'finish',
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
+        result: res
     })
-    ctx.body = 'Y'
-})
+}
 
 module.exports = router
