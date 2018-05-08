@@ -48,16 +48,17 @@ router.post('/:server/', async function (ctx, next) {
         let asyncCommandArr = deployCommand.async
         // 执行同步命令
         log.info('开始执行同步命令...')
-        let stdsync = execsh.runSync(syncCommandArr.join(' && '))
-        // 执行异步命令
-        log.info('开始执行异步命令...')
-        for (let commandArr of asyncCommandArr) {
-            promiseArr.push(execsh.run(commandArr.join(' && ')))
-        }
-        // 更新执行结果
-        Promise.all(promiseArr).then((res) => {
-            res.stdsync = stdsync
-            updateCIFlow(ctx, res)
+        execsh.run(syncCommandArr.join(' && ')).then((syncRes) => {
+            // 执行异步命令
+            log.info('开始执行异步命令...')
+            for (let commandArr of asyncCommandArr) {
+                promiseArr.push(execsh.run(commandArr.join(' && ')))
+            }
+            // 更新执行结果
+            Promise.all(promiseArr).then((res) => {
+                res.unshift(syncRes)
+                updateCIFlow(ctx, res)
+            })
         })
     }
     ctx.body = 'Y'

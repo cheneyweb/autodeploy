@@ -12,11 +12,6 @@ const execOptions = {
 }
 
 const execsh = {
-    runSync(commands) {
-        let output = child_process.execSync(commands, execOptions)
-        log.info(output)
-        return output
-    },
     run(commands) {
         return new Promise((resolve, reject) => {
             child_process.exec(commands, execOptions, (error, stdout, stderr) => {
@@ -32,6 +27,11 @@ const execsh = {
                 resolve({ error, stdout, stderr })
             })
         })
+    },
+    runSync(commands) {
+        let output = child_process.execSync(commands, execOptions)
+        log.info(output)
+        return output
     }
 }
 
