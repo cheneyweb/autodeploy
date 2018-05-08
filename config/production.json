@@ -4,7 +4,7 @@
     },
     "server": {
         "port": 10001,
-        "staticRoot": "/xci/static/",
+        "staticRoot": "/xci/dist/",
         "controllerRoot": "/deploy",
         "controllerDir": "/src/controller/",
         "xnosqlRoot": "/xci/xnosql",
