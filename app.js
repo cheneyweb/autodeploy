@@ -4,6 +4,7 @@ const port = config.server.port
 // 应用服务
 const Koa = require('koa')
 const mount = require('koa-mount')
+const staticServer = require('koa-static')
 const koaBody = require('koa-body')
 const cors = require('@koa/cors')
 const xcontroller = require('koa-xcontroller')
@@ -14,6 +15,8 @@ const log = require('tracer').colorConsole({ level: config.log.level })
 
 // 初始化应用服务
 const app = new Koa()
+// 启用静态资源服务
+app.use(mount(config.server.staticRoot, staticServer(`${__dirname}/dist`)))
 // 跨域处理
 app.use(mount('/deploy/xci/', cors()))  // CI跨域请求
 app.use(mount('/xci/xnosql/', cors()))  // CI跨域请求
