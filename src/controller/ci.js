@@ -16,4 +16,13 @@ router.get('/config', async function (ctx, next) {
     ctx.body = config.ci
 })
 
+/**
+ * 持续集成服务配置修改
+ */
+router.post('/configupdate', async function (ctx, next) {
+    let inparam = ctx.request.body
+    config.ci = inparam
+    ctx.body = config.ci
+})
+
 module.exports = router
