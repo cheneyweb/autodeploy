@@ -24,6 +24,13 @@
 }
 ```
 
+使用说明
+>
+	1、需要在本地运行mongodb，并于config/default.json中配置mongodbUrl
+    2、于config/default.json的 ci 配置项中，写入需要持续集成的脚本
+    3、于第三方git代码库中配置webhook，填写url【http://localhost:10001/xci/controller/static/:server】
+    4、node app.js启动服务，访问localhost:10001/xci/dist/index.html
+
 帮助联系
 >
 	作者:cheneyxu
