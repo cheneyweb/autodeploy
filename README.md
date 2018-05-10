@@ -5,15 +5,15 @@
 
 框架目录结构
 >
-├── app.js         // 服务入口
-├── config
-├── dist           // WEB静态页面
-├── node_modules
-├── package.json
-└── src
-    ├── controller // 部署控制器
-    ├── middleware // 部署中间件
-    └── util       // 工具
+    ├── app.js         // 服务入口
+    ├── config
+    ├── dist           // WEB静态页面
+    ├── node_modules
+    ├── package.json
+    └── src
+        ├── controller // 部署控制器
+        ├── middleware // 部署中间件
+        └── util       // 工具
 
 使用说明
 >
