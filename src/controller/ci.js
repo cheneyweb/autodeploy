@@ -12,7 +12,7 @@ const router = new Router()
  * 持续集成服务列表
  */
 router.get('/config', async function (ctx, next) {
-    ctx.body = config.ci
+    ctx.body = config.sh
 })
 
 /**
@@ -20,8 +20,8 @@ router.get('/config', async function (ctx, next) {
  */
 router.post('/configupdate', async function (ctx, next) {
     let inparam = ctx.request.body
-    config.ci = inparam
-    ctx.body = config.ci
+    config.sh = inparam
+    ctx.body = config.sh
 })
 
 module.exports = router
