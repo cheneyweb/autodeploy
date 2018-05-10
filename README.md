@@ -5,8 +5,8 @@
 ```js
 {
     "server": {
-        "port": 10001,  // 服务端口
-        "staticRoot": "/xci/dist/", // WEB页面访问根路径
+        "port": 10001, // 服务端口
+        "staticRoot": "/xci/dist/", // WEB页面访问根路径
         "controllerRoot": "/xci/controller",    // WEBHOOK根路径
         "mongodbUrl": "mongodb://localhost:27017/x-ci" // 数据库地址
     },
