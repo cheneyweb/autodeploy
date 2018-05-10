@@ -11,7 +11,9 @@
         "mongodbUrl": "mongodb://localhost:27017/x-ci"
     },
     "ci": {
-        "nodeProjectDir": "/usr/local/node",
+        "nodeProjectDir": "/usr/local/node"
+    },
+    "sh": {
         "cake": [
             "cd /usr/local/node/cake",
             "git pull",

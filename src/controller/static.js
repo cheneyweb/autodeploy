@@ -13,7 +13,7 @@ const router = new Router()
 // 持久化构建流
 router.post('/:server/', async function (ctx, next) {
     log.info(`开始自动构建【${ctx.params.server}】...`)
-    let deployCommand = config.ci[ctx.params.server]
+    let deployCommand = config.sh[ctx.params.server]
     let res = await axios.post(`http://localhost:${config.server.port}/xci/xnosql/ciflow/create`, {
         server: ctx.params.server,
         type: 'static',

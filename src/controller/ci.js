@@ -12,7 +12,6 @@ const router = new Router()
  * 持续集成服务列表
  */
 router.get('/config', async function (ctx, next) {
-    delete config.ci.nodeProjectDir
     ctx.body = config.ci
 })
 
