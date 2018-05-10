@@ -1,6 +1,14 @@
 # x-ci
 轻巧精简的持续构建微服务
 
+[传送门：XServer官网文档](http://www.xserver.top)
+
+使用说明
+>
+	1、需要在本地运行mongodb，并配置数据库地址路径
+    2、于第三方git代码库中配置webhook，填写url【http://localhost:10001/xci/controller/static/:server】
+    3、node app.js启动服务，访问localhost:10001/xci/dist/index.html
+
 配置说明
 ```js
 {
@@ -40,12 +48,6 @@
     }
 }
 ```
-
-使用说明
->
-	1、需要在本地运行mongodb，并配置数据库地址路径
-    2、于第三方git代码库中配置webhook，填写url【http://localhost:10001/xci/controller/static/:server】
-    3、node app.js启动服务，访问localhost:10001/xci/dist/index.html
 
 帮助联系
 >
