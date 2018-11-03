@@ -64,6 +64,24 @@
             "./qshell listbucket parcel pagelist.txt",
             "./qshell batchdelete -force parcel pagelist.txt",
             "./qshell qupload ./qshell_parcel-vue.conf"
-        ]
+        ],
+        "pwa-vue": {
+            "sync": [
+                [
+                    "cd /usr/local/node/pwa-vue/",
+                    "git pull",
+                    "npm run build"
+                ]
+            ],
+            "async": [
+                [
+                    "cd /usr/local/node/x-ci/",
+                    "rm -f pagelist.txt",
+                    "./qshell listbucket page pagelist.txt",
+                    "./qshell batchdelete -force page pagelist.txt",
+                    "./qshell qupload ./qshell_pwa-vue.conf"
+                ]
+            ]
+        }
     }
 }
