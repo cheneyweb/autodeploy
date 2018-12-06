@@ -77,8 +77,8 @@
                 [
                     "cd /usr/local/node/x-ci/",
                     "rm -f pagelist.txt",
-                    "./qshell listbucket page pagelist.txt",
-                    "./qshell batchdelete -force page pagelist.txt",
+                    "./qshell listbucket pwa-vue pagelist.txt",
+                    "./qshell batchdelete -force pwa-vue pagelist.txt",
                     "./qshell qupload ./qshell_pwa-vue.conf"
                 ]
             ]
